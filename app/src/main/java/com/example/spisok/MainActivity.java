@@ -1,5 +1,3 @@
-package com.example.spisok;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,13 +22,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         taskList = new ArrayList<>();
-        taskList.add(" Понедельник - 10:00");
-        taskList.add("Вторник - 14:00");
-        taskList.add("Среда - 10:00");
-        taskList.add(" Четверг - 14:00");
-        taskList.add("Пятница - 10:00");
-        taskList.add(" Суббота - 14:00");
-        taskList.add(" Воскресенье - 10:00");
+        taskList.add(" ");
+        taskList.add("");
+        taskList.add("");
+        taskList.add(" ");
+        taskList.add("");
+        taskList.add(" ");
+        taskList.add(" ");
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, taskList);
 
         ListView listView = findViewById(R.id.listView);
