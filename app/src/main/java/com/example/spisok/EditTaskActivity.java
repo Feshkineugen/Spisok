@@ -10,7 +10,10 @@ import android.widget.TimePicker;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class EditTaskActivity extends AppCompatActivity {
 
@@ -51,12 +54,23 @@ public class EditTaskActivity extends AppCompatActivity {
 
         int hour = timePicker.getHour();
         int minute = timePicker.getMinute();
+
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, dayOfMonth, hour, minute);
-        String dateTime = calendar.getTime().toString();
+
+        // Форматирование даты для получения дня недели
+        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
+        String dayOfWeek = dayFormat.format(calendar.getTime());
+
+        // Форматирование времени
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String time = timeFormat.format(calendar.getTime());
+
+        // Составление описания задачи с днем недели
+        String updatedTaskWithDay = "Задача: " + updatedTaskDescription + " (" + dayOfWeek + ") - " + time;
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("updatedTask", updatedTaskDescription);
+        resultIntent.putExtra("updatedTask", updatedTaskWithDay);
         resultIntent.putExtra("position", position);
         setResult(RESULT_OK, resultIntent);
         finish();
