@@ -23,40 +23,51 @@ public class EditTaskActivity extends AppCompatActivity {
     private int position;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_task);
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_edit_task);
 
-        taskDescriptionEditText = findViewById(R.id.taskDescriptionEditText);
-        datePicker = findViewById(R.id.datePicker);
-        timePicker = findViewById(R.id.timePicker);
+    // Инициализация элементов пользовательского интерфейса
+    taskDescriptionEditText = findViewById(R.id.taskDescriptionEditText);
+    datePicker = findViewById(R.id.datePicker);
+    timePicker = findViewById(R.id.timePicker);
 
-        String selectedTask = getIntent().getStringExtra("selectedTask");
-        position = getIntent().getIntExtra("position", -1);
+    // Получение выбранной задачи и позиции из предыдущей активности
+    String selectedTask = getIntent().getStringExtra("selectedTask");
+    position = getIntent().getIntExtra("position", -1);
 
-        taskDescriptionEditText.setText(selectedTask);
+    // Установка текста описания задачи
+    taskDescriptionEditText.setText(selectedTask);
 
-        Button saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveTask();
-            }
-        });
-    }
+    // Нахождение и инициализация кнопки сохранения
+    Button saveButton = findViewById(R.id.saveButton);
+    // Установка слушателя нажатия на кнопку сохранения
+    saveButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            saveTask();
+        }
+    });
+}
 
-    private void saveTask() {
-        String updatedTaskDescription = taskDescriptionEditText.getText().toString();
+  private void saveTask() {
+    // Получение обновленного описания задачи из текстового поля
+    String updatedTaskDescription = taskDescriptionEditText.getText().toString();
 
-        int year = datePicker.getYear();
-        int month = datePicker.getMonth();
-        int dayOfMonth = datePicker.getDayOfMonth();
+    // Получение выбранной пользователем даты из элемента DatePicker
+    int year = datePicker.getYear();
+    int month = datePicker.getMonth();
+    int dayOfMonth = datePicker.getDayOfMonth();
 
-        int hour = timePicker.getHour();
-        int minute = timePicker.getMinute();
+    // Получение выбранного пользователем времени из элемента TimePicker
+    int hour = timePicker.getHour();
+    int minute = timePicker.getMinute();
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, dayOfMonth, hour, minute);
+    // Создание экземпляра Calendar и установка выбранной пользователем даты и времени
+    Calendar calendar = Calendar.getInstance();
+    calendar.set(year, month, dayOfMonth, hour, minute);
+    // Дальнейшие действия с полученным объектом Calendar
+
 
         // Форматирование даты для получения дня недели
         SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.getDefault());
@@ -70,9 +81,13 @@ public class EditTaskActivity extends AppCompatActivity {
         String updatedTaskWithDay = "Задача: " + updatedTaskDescription + " (" + dayOfWeek + ") - " + time;
 
         Intent resultIntent = new Intent();
-        resultIntent.putExtra("updatedTask", updatedTaskWithDay);
-        resultIntent.putExtra("position", position);
-        setResult(RESULT_OK, resultIntent);
-        finish();
+// Устанавливаем обновленную задачу в качестве результата
+resultIntent.putExtra("updatedTask", updatedTaskWithDay);
+// Передаем позицию элемента для обновления в качестве результата
+resultIntent.putExtra("position", position);
+// Устанавливаем результат операции как "RESULT_OK" и передаем resultIntent
+setResult(RESULT_OK, resultIntent);
+// Завершаем текущую активность
+finish();
     }
 }
